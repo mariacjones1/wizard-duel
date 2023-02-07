@@ -12,13 +12,32 @@ def start_game():
                 break
             elif user_start == "N":
                 print("Maybe next time!")
-                break
+                exit()
             else:
                 raise ValueError
         except ValueError:
             print(f"Invalid input: {user_start}. Please type 'Y' or 'N'")
 
     return user_start
+
+
+def create_user():
+    """
+    Let's the user create a username for the game
+    """
+    print("Excellent! Before we get started, what should we call you?")
+    username = input("Enter username: ")
+    
+    if username.isalnum() is False:
+        raise ValueError(
+            print(f"{username} not valid. Please use numbers and letters only")
+        )
+    elif len(username) < 3:
+        raise ValueError(
+            print("Username must be at least 3 characters")
+        )
+    
+    return username
 
 
 # def main():
@@ -43,3 +62,5 @@ print("Now that you know the rules, would you like to play?")
 
 # main()
 start_game()
+create_user()
+print(create_user)
