@@ -20,8 +20,7 @@ def welcome_message():
 
 def start_game():
     """
-    Show game introduction and instructions to user and
-    provide option to initiate game
+    Ask if user wants to initiate the game
     """
     while True:
         user_start = input("Y/N\n").upper()
@@ -138,27 +137,36 @@ def main():
     Run main game functions
     """
     welcome_message()
-    start_game()
-    username = create_user()
-    print(f"Hello {username}! Let's duel")
-    cpu_score = Score("Computer", 5)
-    user_score = Score(username, 5)
 
-    while user_score.score > 0 and cpu_score.score > 0:
-        print(cpu_score.show_score())
-        print(user_score.show_score())
-        user_spell, cpu_spell = cast_spells()
-        print(f"You cast: {user_spell}!")
-        print(f"Computer cast: {cpu_spell}!")
+    while True:
+        start_game()
+        username = create_user()
+        print(f"Hello {username}! Let's duel")
+        cpu_score = Score("Computer", 5)
+        user_score = Score(username, 5)
 
-        if declare_round_winner(user_spell, cpu_spell) == "draw":
-            print("Draw! Cast a new spell\n")
-        elif declare_round_winner(user_spell, cpu_spell) == "user_win":
-            print("You win!\n")
-            cpu_score.score -= 1
-        elif declare_round_winner(user_spell, cpu_spell) == "cpu_win":
+        while user_score.score > 0 and cpu_score.score > 0:
+            print(cpu_score.show_score())
+            print(user_score.show_score())
+            user_spell, cpu_spell = cast_spells()
+            print(f"You cast: {user_spell}!")
+            print(f"Computer cast: {cpu_spell}!")
+
+            if declare_round_winner(user_spell, cpu_spell) == "draw":
+                print("Draw! Cast a new spell\n")
+            elif declare_round_winner(user_spell, cpu_spell) == "user_win":
+                print("You win!\n")
+                cpu_score.score -= 1
+            elif declare_round_winner(user_spell, cpu_spell) == "cpu_win":
+                print("Computer wins!\n")
+                user_score.score -= 1
+
+        if user_score.score == 0:
             print("Computer wins!\n")
-            user_score.score -= 1
+        elif cpu_score.score == 0:
+            print("You win!")
+
+        print("Would you like to play again?")
 
 
 main()
