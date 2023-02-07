@@ -1,3 +1,6 @@
+import random
+
+
 def welcome_message():
     """
     Prints welcome message and game instructions
@@ -49,14 +52,14 @@ def create_user():
         try:
             if username.isalnum() is False:
                 raise ValueError(
-                    print(f"{username} not valid. Numbers and letters only")
+                    print(f"{username} should use numbers and letters only.")
                 )
             elif len(username) < 3:
                 raise ValueError(
-                    print("Username must be at least 3 characters")
+                    print("Username must be at least 3 characters.")
                 )
         except ValueError:
-            print("Invalid username, please try again")
+            print("Invalid username, please try again.")
         else:
             break
 
@@ -78,6 +81,24 @@ class Score:
         return self.name + " score: " + str(self.score)
 
 
+def cast_spells():
+    spells = ["A", "D", "S"]
+
+    while True:
+        user_spell = input("Choose your spell: A, D or S: ").upper()
+
+        try:
+            if user_spell not in spells:
+                raise ValueError
+            else:
+                break
+        except ValueError:
+            print(f"Invalid spell: {user_spell}. Please try again.")
+    
+    computer_spell = random.choice(spells)
+    return user_spell, computer_spell
+
+
 def main():
     """
     Run main game functions
@@ -90,6 +111,9 @@ def main():
     user_score = Score(username, 5)
     print(computer_score.show_score())
     print(user_score.show_score())
+    user_spell, computer_spell = cast_spells()
+    print(f"You cast: {user_spell}!")
+    print(f"Computer cast: {computer_spell}!")
 
 
 main()
