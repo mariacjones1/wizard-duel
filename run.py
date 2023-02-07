@@ -46,12 +46,32 @@ def create_user():
     return username
 
 
-# def main():
-#     """
-#     Run main game functions
-#     """
-#     start_game()
-#     print(start_game())
+class Score:
+    """
+    A class to represent user or computer scores
+    """
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+    def show_score(self):
+        """
+        Shows score
+        """
+        return self.name + " score: " + str(self.score)
+
+
+def main():
+    """
+    Run main game functions
+    """
+    start_game()
+    username = create_user()
+    print(f"Hello {username}! Let's duel")
+    computer_score = Score("Computer", 5)
+    user_score = Score(username, 5)
+    print(computer_score.show_score())
+    print(user_score.show_score())
 
 
 print("Hello and welcome to...\n")
@@ -66,6 +86,4 @@ print("and defending beats attacking. Think rock, paper, scissors,")
 print("only magical!\n")
 print("Now that you know the rules, would you like to play?")
 
-# main()
-start_game()
-print(f"Hello {create_user()}! Let's duel")
+main()
