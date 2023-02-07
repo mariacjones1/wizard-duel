@@ -82,6 +82,9 @@ class Score:
 
 
 def cast_spells():
+    """
+    Gets user to input a spell and generates a random one for the computer
+    """
     spells = ["A", "D", "S"]
 
     while True:
@@ -94,9 +97,40 @@ def cast_spells():
                 break
         except ValueError:
             print(f"Invalid spell: {user_spell}. Please try again.")
-    
-    computer_spell = random.choice(spells)
-    return user_spell, computer_spell
+
+    cpu_spell = random.choice(spells)
+    return user_spell, cpu_spell
+
+
+def declare_round_winner(user_spell, cpu_spell):
+    """
+    Calculate and declare the winner for each round
+    """
+    if user_spell == "A":
+        if cpu_spell == "A":
+            result = "draw"
+        if cpu_spell == "D":
+            result = "cpu_win"
+        if cpu_spell == "S":
+            result = "user_win"
+
+    if user_spell == "D":
+        if cpu_spell == "A":
+            result = "user_win"
+        if cpu_spell == "D":
+            result = "draw"
+        if cpu_spell == "S":
+            result = "cpu_win"
+
+    if user_spell == "S":
+        if cpu_spell == "A":
+            result = "cpu_win"
+        if cpu_spell == "D":
+            result = "user_win"
+        if cpu_spell == "S":
+            result = "draw"
+
+    return result
 
 
 def main():
@@ -107,13 +141,24 @@ def main():
     start_game()
     username = create_user()
     print(f"Hello {username}! Let's duel")
-    computer_score = Score("Computer", 5)
+    cpu_score = Score("Computer", 5)
     user_score = Score(username, 5)
-    print(computer_score.show_score())
-    print(user_score.show_score())
-    user_spell, computer_spell = cast_spells()
-    print(f"You cast: {user_spell}!")
-    print(f"Computer cast: {computer_spell}!")
+
+    while user_score.score > 0 and cpu_score.score > 0:
+        print(cpu_score.show_score())
+        print(user_score.show_score())
+        user_spell, cpu_spell = cast_spells()
+        print(f"You cast: {user_spell}!")
+        print(f"Computer cast: {cpu_spell}!")
+
+        if declare_round_winner(user_spell, cpu_spell) == "draw":
+            print("Draw! Cast a new spell\n")
+        elif declare_round_winner(user_spell, cpu_spell) == "user_win":
+            print("You win!\n")
+            cpu_score.score -= 1
+        elif declare_round_winner(user_spell, cpu_spell) == "cpu_win":
+            print("Computer wins!\n")
+            user_score.score -= 1
 
 
 main()
