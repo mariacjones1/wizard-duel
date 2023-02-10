@@ -25,15 +25,12 @@ def start_game():
     while True:
         user_start = input("Y/N\n").upper()
 
-        try:
-            if user_start == "Y":
-                break
-            elif user_start == "N":
-                print("Maybe next time!")
-                exit()
-            else:
-                raise ValueError
-        except ValueError:
+        if user_start == "Y":
+            break
+        elif user_start == "N":
+            print("Maybe next time!")
+            exit()
+        else:
             print(f"Invalid input: {user_start}. Please type 'Y' or 'N'")
 
     return user_start
@@ -50,15 +47,13 @@ def create_user():
 
         try:
             if username.isalnum() is False:
-                raise ValueError(
-                    print(f"{username} should use numbers and letters only.")
-                )
+                raise TypeError
             elif len(username) < 3:
-                raise ValueError(
-                    print("Username must be at least 3 characters.")
-                )
+                raise ValueError
+        except TypeError:
+            print("Username should use numbers and letters only.")
         except ValueError:
-            print("Invalid username, please try again.")
+            print("Username must be at least 3 characters.")
         else:
             break
 
